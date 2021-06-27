@@ -6,6 +6,9 @@ module.exports = {
   createUser,
   deletePhoto,
   addUserINDataBase,
+  userPhotoToDB,
+  getUserPhoto,
+  deleteUserPhoto
 };
 let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
@@ -21,9 +24,11 @@ const photoSchema = mongoose.Schema({
 const usrSchema = mongoose.Schema({
   email: String,
   photo: [photoSchema],
+  userphotos:[photoSchema]
 });
 
 const photoModel = mongoose.model("photo", photoSchema);
+const userPhotoModel = mongoose.model("userphotos", photoSchema);
 const userModel = mongoose.model("user", usrSchema);
 
 function createUser(email) {
@@ -32,6 +37,7 @@ function createUser(email) {
     new userModel({
       email: email,
       photo: [{}],
+      userphotos: [{}],
     })
   );
   user[0].save();
@@ -58,11 +64,31 @@ function addPhoto(req, res) {
     }
   });
 }
+//this function to store the photo that enterd in the form by the user
+function userPhotoToDB(req, res) {
+  let { title, description, imgurl, email } = req.body;
+  console.log(req.body);
+  
+  userModel.find({ email: email }, function (err, photoData) {
+    console.log("userphoto");
+    if (err) {
+      res.send(err);
+    } else {
+      photoData[0].userphotos.push({
+        title,
+        description: description,
+        url: imgurl,
+      });
+      photoData[0].save();
+      res.send(photoData[0].photo);
+    }
+  });
+}
 //this function to insert new user in database
 function addUserINDataBase(req, res) {
   let { email } = req.body;
-  console.log(req.body);
 
+  
   userModel.find({ email: email }, (err, data) => {
     if (err) {
       console.log(err);
@@ -71,7 +97,7 @@ function addUserINDataBase(req, res) {
         createUser(email);
         console.log("created");
       } else {
-        console.log(data);
+        // console.log(data);
       }
     }
   });
@@ -81,7 +107,6 @@ function addUserINDataBase(req, res) {
 //http://localhost:3010/getphoto?email=
 function photoHandler(req, res) {
   let email = req.query.email;
-  // console.log(email);
 
   userModel.find({ email: email }, function (err, photoData) {
     if (err) {
@@ -92,20 +117,28 @@ function photoHandler(req, res) {
   });
 }
 
-//DeleteFunction
+//http://localhost:3010/getuserphoto?email=
+function getUserPhoto(req, res) {
+  let email = req.query.email;
+  console.log('userphpto');
 
+  userModel.find({ email: email }, function (err, photoData) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(photoData[0].userphotos);
+    }
+  });
+}
+
+//this function to delete the selected photo(add to my photo)
+//DeleteFunction
 function deletePhoto(req, res) {
-  console.log("🚀 ~ file: server.js ~ line 136 ~ deletePhoto ~ query");
   const { email } = req.query;
   const index = Number(req.params.index); //1
-  console.log("🚀 ~ file: server.js ~ line 139 ~ deletePhoto ~ index", index);
-
-  console.log(email);
 
   userModel.find({ email: email }, (err, data) => {
-    console.log("before", data);
     if (err) {
-      console.log(err.message);
       res.status(500).send(err.message);
     } else {
       const newPhotoArray = data[0].photo.filter((item, idx) => {
@@ -115,9 +148,29 @@ function deletePhoto(req, res) {
       });
       data[0].photo = newPhotoArray;
       data[0].save();
-      console.log("after", data);
 
       res.status(201).send(data[0].photo);
     }
   });
 }
+function deleteUserPhoto(req, res) {
+  const { email } = req.query;
+  const index = Number(req.params.index); //1
+
+  userModel.find({ email: email }, (err, data) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      const newPhotoArray = data[0].userphotos.filter((item, idx) => {
+        if (index !== idx) {
+          return item;
+        }
+      });
+      data[0].userphotos = newPhotoArray;
+      data[0].save();
+
+      res.status(201).send(data[0].photo);
+    }
+  });
+}
+

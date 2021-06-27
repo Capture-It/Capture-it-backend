@@ -19,13 +19,18 @@ const{
     photoHandler,
     createUser,
     deletePhoto,
-    addUserINDataBase
+    addUserINDataBase,
+    userPhotoToDB,
+    getUserPhoto,
+    deleteUserPhoto
 }=require('./module/dbForHomeAndMyPhoto');
 
 
 ////http://localhost:3010/deletephoto?email
-
 server.delete('/deletephoto/:index', deletePhoto);
+
+// http://localhost:3010/deleteUserphoto/${index}
+server.delete('/deleteUserphoto/:index', deleteUserPhoto);
 
 
 
@@ -37,6 +42,11 @@ server.post('/initdb',addUserINDataBase);
 
 //http://localhost:3010/getphoto?email=
 server.get('/getphoto', photoHandler)
+
+// http://localhost:3010/addUserPhoto
+server.post('/addUserPhoto',userPhotoToDB)
+// http://localhost:3010/getuserphoto?email=
+server.get('/getuserphoto',getUserPhoto)
 
 
 
