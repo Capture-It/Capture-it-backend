@@ -4,8 +4,8 @@ module.exports = {
     createPublishedUser,
     addPublishedDataToDB,
     getPublishedDataDB,
-    addCommentToDB
-
+    addCommentToDB,
+    deletePublishedphoto
 };
 
 let keyAtlas = process.env.ATLAS;
@@ -86,11 +86,12 @@ function addPublishedDataToDB(req, res) {
           name:nickName,
           comment:[]
         });
+        console.log('added');
         photoData[0].save();
         // res.send(photoData[0].userPublishedData);
-        console.log('added');
     }
           else{
+            console.log('create new photo');
             createPublishedUser(email,title,description,url,nickName);
 
           }
@@ -99,9 +100,9 @@ function addPublishedDataToDB(req, res) {
   }
 
 
-
+  
+  
   // http://localhost:3010/getPublishedDataDB
-
   function getPublishedDataDB(req, res) {
     publishedUserSchemaModel.find({}, function (err, photoData) {
       if (err) {
@@ -112,20 +113,30 @@ function addPublishedDataToDB(req, res) {
       }
     });
 
-    }
-
-// http://localhost:3010/addCommentToDB
-    function addCommentToDB(req, res) {
+  }
+  
+    //  function  getPublishedDataDB1 () {
+      //   publishedUserSchemaModel.find({}, function (err, photoData) {
+        
+    //       console.log('hhhhh',photoData);
+    //       return(photoData);
+    
+    //   });
+    
+    //   }
+    
+    // http://localhost:3010/addCommentToDB
+    function addCommentToDB (req, res) {
         let { email, comment, name, pic,id } = req.body;
         console.log(req.body);
       
-        publishedUserSchemaModel.find({ email: email }, function (err, photoData) {
+        publishedUserSchemaModel.find({ email: email },  function (err, photoData) {
           if (err) {
             res.send(err);
           } else {
             let newArr= photoData[0].userPublishedData.filter((item)=>{
                  if(id==item._id){
-                     return item;
+                   return item;
                  }else{
                      console.log('no');
                  }
@@ -135,12 +146,59 @@ function addPublishedDataToDB(req, res) {
                    commenter: name ,
                    url: pic,
                  });
-
-                console.log(photoData[0].userPublishedData);
-                photoData[0].save();
-                // res.send(photoData[0].userPublishedData);
-                // console.log('added');
-        }
-    });
+                 photoData[0].save();
+                 
+                // try{
+                  //   publishedUserSchemaModel.find({}, function (err, photoData1) {
+                //     res.send(photoData1);
+                
+                // });
+                // }
+                // catch(err){
+                  //   console.log(err);
+                // }
+              }
+            });
 }
 
+// http://localhost:3010/deletePublishedphoto/
+function deletePublishedphoto(req, res) {
+  const { email } = req.query;
+  const id = req.params.id;
+  console.log((email));
+  console.log(id);
+
+  publishedUserSchemaModel.find({ email: email }, (err, data) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      const newPhotoArray = data[0].userPublishedData.filter((item) => {
+        if (id !==_id) {
+          return item;
+        }
+      });
+      data[0].userPublishedData = newPhotoArray;
+      console.log(data[0]);
+      // data[0].save();
+
+      // res.status(201).send(data[0].photo);
+    }
+  });
+
+  // if (err) {
+  //   res.send(err);
+  // } else {
+  //   let newArr= photoData[0].userPublishedData.filter((item)=>{
+  //        if(id==item._id){
+  //          return item;
+  //        }else{
+  //            console.log('no');
+  //        }
+  //       })
+  //       newArr[0].comment.push({
+  //          text:comment,
+  //          commenter: name ,
+  //          url: pic,
+  //        });
+  //        photoData[0].save();
+}
