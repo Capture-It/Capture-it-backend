@@ -8,12 +8,13 @@ module.exports = {
   addUserINDataBase,
   userPhotoToDB,
   getUserPhoto,
-  deleteUserPhoto
+  deleteUserPhoto,
+  updateuserPhotoHandler
 };
-let keyAtlas = process.env.ATLAS;
+// let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
 
-mongoose.connect(keyAtlas, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/photos', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const photoSchema = mongoose.Schema({
   title: String,
@@ -39,10 +40,21 @@ function createUser(email) {
       photo: [{}],
       userphotos: [{}],
     })
-  );
+   );
   user[0].save();
+//  const user1=userModel({
+//     email: "123@gmail.com",
+//     photo:[
+//     {title:"String",
+//     description :"String",
+//     url:"String", }],
+//     userphotos:[{
+//     title:"String",
+//     description :"String",
+//     url:"String",} ],
+// })
+//   user1.save();
 }
-
 // createUser();
 
 //this methode to store the picture that choosen by the user in the database
@@ -173,4 +185,36 @@ function deleteUserPhoto(req, res) {
     }
   });
 }
+
+
+//http://localhost:3010/updatePhoto
+function updateuserPhotoHandler(req,res){
+const index=req.params.index;
+const {email,photoName,description,imgurl}=req.body;
+console.log(req.body)
+console.log(index,email,photoName,description)
+userModel.findOne({email:email}, (err,ownerData)=>{
+  ownerData.userphotos.splice(index,1,{
+    url:imgurl,
+    title:photoName,
+    description:description,
+  })
+  // console.log(ownerData)
+    ownerData.save();
+    res.send(ownerData.userphotos)
+  
+})
+
+
+}
+
+
+// let newArr =ownerData.userphotos.splice(index,1,{
+//   title:photoName,
+//   description:description
+// })
+// ownerData.userphotos=newArr
+// ownerData.save();
+// res.send(ownerData.userphotos)
+
 
