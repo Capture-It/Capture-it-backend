@@ -26,6 +26,15 @@ const{
     updateuserPhotoHandler
 }=require('./module/dbForHomeAndMyPhoto');
 
+const{
+  createPublishedUser,
+  addPublishedDataToDB,
+  getPublishedDataDB,
+  addCommentToDB
+}=require('./module/published');
+
+// createPublishedUser();
+
 
 ////http://localhost:3010/deletephoto?email
 server.delete('/deletephoto/:index', deletePhoto);
@@ -51,6 +60,14 @@ server.get('/getuserphoto',getUserPhoto)
 
 //http://localhost:3010/updatePhoto
 server.put('/updatePhoto/:index',updateuserPhotoHandler)
+//the following routes for publisd data
+// http://localhost:3010/addPublishedDataToDB?
+server.post('/addPublishedDataToDB',addPublishedDataToDB);
+// http://localhost:3010/getPublishedDataDB
+server.get('/getPublishedDataDB',getPublishedDataDB);
+// http://localhost:3010/addCommentToDB
+server.post('/addCommentToDB',addCommentToDB);
+
 
 
 

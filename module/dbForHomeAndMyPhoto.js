@@ -26,6 +26,7 @@ const usrSchema = mongoose.Schema({
   email: String,
   photo: [photoSchema],
   userphotos:[photoSchema]
+
 });
 
 const photoModel = mongoose.model("photo", photoSchema);
@@ -54,6 +55,15 @@ function createUser(email) {
 //     url:"String",} ],
 // })
 //   user1.save();
+  // user1=newModel({
+  //   email:'abodeian28@gmail',
+  //   photo:[
+  //     title: "String",
+  // description: "String",
+  // url: "String",
+  //   ]
+  // })
+  // user1.save;
 }
 // createUser();
 
@@ -129,11 +139,10 @@ function photoHandler(req, res) {
   });
 }
 
+//this function to return the photos that added by the user
 //http://localhost:3010/getuserphoto?email=
 function getUserPhoto(req, res) {
   let email = req.query.email;
-  console.log('userphpto');
-
   userModel.find({ email: email }, function (err, photoData) {
     if (err) {
       res.send(err);
