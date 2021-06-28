@@ -30,10 +30,12 @@ const{
   createPublishedUser,
   addPublishedDataToDB,
   getPublishedDataDB,
-  addCommentToDB
+  addCommentToDB,
+  deletePublishedphoto
 }=require('./module/published');
 
 // createPublishedUser();
+// createUser();
 
 
 ////http://localhost:3010/deletephoto?email
@@ -65,6 +67,9 @@ server.post('/addPublishedDataToDB',addPublishedDataToDB);
 server.get('/getPublishedDataDB',getPublishedDataDB);
 // http://localhost:3010/addCommentToDB
 server.post('/addCommentToDB',addCommentToDB);
+    // http://localhost:3010/deletePublishedphoto/
+    server.delete('/deletePublishedphoto/:id',deletePublishedphoto)
+
 
 
 
