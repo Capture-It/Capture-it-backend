@@ -162,43 +162,33 @@ function addPublishedDataToDB(req, res) {
 }
 
 // http://localhost:3010/deletePublishedphoto/
+
 function deletePublishedphoto(req, res) {
   const { email } = req.query;
-  const id = req.params.id;
+  const url = req.params.url;
   console.log((email));
-  console.log(id);
+  console.log("from the front",url);
 
-  publishedUserSchemaModel.find({ email: email }, (err, data) => {
+  publishedUserSchemaModel.find({ email: email },  function (err, photoData) {
     if (err) {
-      res.status(500).send(err.message);
+      res.send(err);
     } else {
-      const newPhotoArray = data[0].userPublishedData.filter((item) => {
-        if (id !==_id) {
-          return item;
+
+      let newArr= photoData[0].userPublishedData.filter((item)=>{
+        console.log(item.url);
+           if(url!==item.url){
+             return item;
+           }else{
+               console.log('no');
+           }
+          })
+          photoData[0].userPublishedData=[]
+          photoData[0].userPublishedData= photoData[0].userPublishedData.concat(newArr);
+          console.log(photoData[0].userPublishedData);
+          console.log(photoData[0]);
+          photoData[0].save();
+
         }
       });
-      data[0].userPublishedData = newPhotoArray;
-      console.log(data[0]);
-      // data[0].save();
 
-      // res.status(201).send(data[0].photo);
-    }
-  });
-
-  // if (err) {
-  //   res.send(err);
-  // } else {
-  //   let newArr= photoData[0].userPublishedData.filter((item)=>{
-  //        if(id==item._id){
-  //          return item;
-  //        }else{
-  //            console.log('no');
-  //        }
-  //       })
-  //       newArr[0].comment.push({
-  //          text:comment,
-  //          commenter: name ,
-  //          url: pic,
-  //        });
-  //        photoData[0].save();
 }
