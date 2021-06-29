@@ -8,10 +8,10 @@ module.exports = {
   deletePublishedphoto,
 };
 
-let keyAtlas = process.env.ATLAS;
+// let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
 
-mongoose.connect(keyAtlas, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/photos', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const publishedDataSchema = mongoose.Schema({
   name: String,
@@ -35,6 +35,7 @@ const publishedUserSchemaModel = mongoose.model(
   publishedUserSchema
 );
 
+<<<<<<< HEAD
 function createPublishedUser(email, title, description, url, nickName) {
   const user = [];
   user.push(
@@ -72,6 +73,43 @@ function createPublishedUser(email, title, description, url, nickName) {
 
   //   })
   //   user1.save();
+=======
+function createPublishedUser(email,title,description,url,nickName) {
+  // const user = [];
+  // user.push(
+  //   new publishedUserSchemaModel({
+  //     email: email,
+  //     userPublishedData:[{
+  //       name:nickName,
+  //       title: title,
+  //       description: description,
+  //       url: url,
+  //     }]
+  //   })
+  // );
+  // user[0].save();
+  
+  const user1=publishedUserSchemaModel({
+      email:'abdullah@yahoo.com',
+      userPublishedData:[
+          {
+        name:"String",
+        title: "String",
+        description: "String",
+        url: "String",
+        comment:[
+            {
+                text:'cool'
+            }
+                
+        ]
+          }
+
+      ]
+
+  })
+  user1.save();
+>>>>>>> origin/work_1
 }
 
 // createPublishedUser();

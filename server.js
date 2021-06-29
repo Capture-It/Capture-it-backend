@@ -10,7 +10,7 @@ require("dotenv").config();
 server.use(express.json());
 
 
-const PORT = process.env.PORT;
+const PORT = 3010;
 
 
 
@@ -22,8 +22,8 @@ const{
     addUserINDataBase,
     userPhotoToDB,
     getUserPhoto,
-    deleteUserPhoto
-    
+    deleteUserPhoto,
+    updateuserPhotoHandler
 }=require('./module/dbForHomeAndMyPhoto');
 
 const{
@@ -60,6 +60,8 @@ server.post('/addUserPhoto',userPhotoToDB)
 // http://localhost:3010/getuserphoto?email=
 server.get('/getuserphoto',getUserPhoto)
 
+//http://localhost:3010/updatePhoto
+server.put('/updatePhoto/:index',updateuserPhotoHandler)
 //the following routes for publisd data
 // http://localhost:3010/addPublishedDataToDB?
 server.post('/addPublishedDataToDB',addPublishedDataToDB);
