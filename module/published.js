@@ -8,10 +8,10 @@ module.exports = {
 
 };
 
-let keyAtlas = process.env.ATLAS;
+// let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
 
-mongoose.connect(keyAtlas, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/photos', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const publishedDataSchema = mongoose.Schema({
   name:String,
@@ -31,40 +31,40 @@ const publishedDataSchemaModel = mongoose.model("publishedPhoto", publishedDataS
 const publishedUserSchemaModel = mongoose.model("PublishedUserData", publishedUserSchema);
 
 function createPublishedUser(email,title,description,url,nickName) {
-  const user = [];
-  user.push(
-    new publishedUserSchemaModel({
-      email: email,
-      userPublishedData:[{
-        name:nickName,
-        title: title,
-        description: description,
-        url: url,
-      }]
-    })
-  );
-  user[0].save();
+  // const user = [];
+  // user.push(
+  //   new publishedUserSchemaModel({
+  //     email: email,
+  //     userPublishedData:[{
+  //       name:nickName,
+  //       title: title,
+  //       description: description,
+  //       url: url,
+  //     }]
+  //   })
+  // );
+  // user[0].save();
   
-//   const user1=publishedUserSchemaModel({
-//       email:'abdullah@yahoo.com',
-//       userPublishedData:[
-//           {
-//         name:"String",
-//         title: "String",
-//         description: "String",
-//         url: "String",
-//         comment:[
-//             {
-//                 text:'cool'
-//             }
+  const user1=publishedUserSchemaModel({
+      email:'abdullah@yahoo.com',
+      userPublishedData:[
+          {
+        name:"String",
+        title: "String",
+        description: "String",
+        url: "String",
+        comment:[
+            {
+                text:'cool'
+            }
                 
-//         ]
-//           }
+        ]
+          }
 
-//       ]
+      ]
 
-//   })
-//   user1.save();
+  })
+  user1.save();
 }
 
 // createPublishedUser();

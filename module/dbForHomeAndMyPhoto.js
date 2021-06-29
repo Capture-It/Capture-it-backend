@@ -43,6 +43,7 @@ function createUser(email) {
     })
    );
   user[0].save();
+}
 //  const user1=userModel({
 //     email: "123@gmail.com",
 //     photo:[
@@ -64,7 +65,6 @@ function createUser(email) {
   //   ]
   // })
   // user1.save;
-}
 // createUser();
 
 //this methode to store the picture that choosen by the user in the database
