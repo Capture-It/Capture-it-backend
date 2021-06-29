@@ -11,7 +11,7 @@ module.exports = {
 let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
 
-mongoose.connect(keyAtlas, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/photos', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const publishedDataSchema = mongoose.Schema({
   name: String,

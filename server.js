@@ -22,7 +22,8 @@ const{
     addUserINDataBase,
     userPhotoToDB,
     getUserPhoto,
-    deleteUserPhoto
+    deleteUserPhoto,
+    updateuserPhotoHandler,
     
 }=require('./module/dbForHomeAndMyPhoto');
 
@@ -43,6 +44,10 @@ server.delete('/deletephoto/:index', deletePhoto);
 
 // http://localhost:3010/deleteUserphoto/${index}
 server.delete('/deleteUserphoto/:index', deleteUserPhoto);
+
+//http://localhost:3010/updatePhoto
+server.put('/updatePhoto/:index',updateuserPhotoHandler)
+
 
 
 
