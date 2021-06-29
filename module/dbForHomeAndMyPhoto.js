@@ -135,7 +135,12 @@ function getUserPhoto(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.send(photoData[0].userphotos);
+          if(photoData[0].userphotos!==[]){
+          res.send(photoData[0].userphotos);
+          }
+          else{
+            console.log('fixed');
+          }
     }
   });
 }
