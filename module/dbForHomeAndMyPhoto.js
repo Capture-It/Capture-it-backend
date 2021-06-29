@@ -122,7 +122,14 @@ function photoHandler(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.send(photoData[0].photo);
+      if(photoData[0].photo !== undefined){
+
+        res.send(photoData[0].photo);
+      }
+      else
+    {
+      res.send('somthing went wrong')
+    }
     }
   });
 }
