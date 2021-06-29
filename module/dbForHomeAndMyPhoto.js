@@ -8,12 +8,13 @@ module.exports = {
   addUserINDataBase,
   userPhotoToDB,
   getUserPhoto,
-  deleteUserPhoto
+  deleteUserPhoto,
+  
 };
 let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
 
-mongoose.connect(keyAtlas, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/capture', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const photoSchema = mongoose.Schema({
   title: String,
@@ -165,7 +166,6 @@ function deletePhoto(req, res) {
 function deleteUserPhoto(req, res) {
   const { email } = req.query;
   const index = Number(req.params.index); //1
-
   userModel.find({ email: email }, (err, data) => {
     if (err) {
       res.status(500).send(err.message);

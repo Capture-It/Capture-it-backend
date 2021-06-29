@@ -67,7 +67,8 @@ server.post('/addPublishedDataToDB',addPublishedDataToDB);
 server.get('/getPublishedDataDB',getPublishedDataDB);
 // http://localhost:3010/addCommentToDB
 server.post('/addCommentToDB',addCommentToDB);
-    // http://localhost:3010/deletePublishedphoto/
+   
+// http://localhost:3010/deletePublishedphoto/
     server.delete('/deletePublishedphoto/:id',deletePublishedphoto)
 
 
