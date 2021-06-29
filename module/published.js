@@ -35,7 +35,7 @@ const publishedUserSchemaModel = mongoose.model(
   publishedUserSchema
 );
 
-<<<<<<< HEAD
+
 function createPublishedUser(email, title, description, url, nickName) {
   const user = [];
   user.push(
@@ -73,43 +73,6 @@ function createPublishedUser(email, title, description, url, nickName) {
 
   //   })
   //   user1.save();
-=======
-function createPublishedUser(email,title,description,url,nickName) {
-  // const user = [];
-  // user.push(
-  //   new publishedUserSchemaModel({
-  //     email: email,
-  //     userPublishedData:[{
-  //       name:nickName,
-  //       title: title,
-  //       description: description,
-  //       url: url,
-  //     }]
-  //   })
-  // );
-  // user[0].save();
-  
-  const user1=publishedUserSchemaModel({
-      email:'abdullah@yahoo.com',
-      userPublishedData:[
-          {
-        name:"String",
-        title: "String",
-        description: "String",
-        url: "String",
-        comment:[
-            {
-                text:'cool'
-            }
-                
-        ]
-          }
-
-      ]
-
-  })
-  user1.save();
->>>>>>> origin/work_1
 }
 
 // createPublishedUser();
