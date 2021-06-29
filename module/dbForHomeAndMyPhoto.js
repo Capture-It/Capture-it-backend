@@ -136,6 +136,7 @@ function getUserPhoto(req, res) {
       res.send(err);
     } else {
           if(photoData[0].userphotos!==[]){
+            console.log(photoData[0].userphotos);
           res.send(photoData[0].userphotos);
           }
           else{

@@ -125,11 +125,11 @@ function getPublishedDataDB(req, res) {
 //   }
 
 // http://localhost:3010/addCommentToDB
-function addCommentToDB(req, res) {
+ function addCommentToDB(req, res) {
   let { email, comment, name, pic, id } = req.body;
   console.log(req.body);
 
-  publishedUserSchemaModel.find({ email: email }, function (err, photoData) {
+   publishedUserSchemaModel.find({ email: email }, function (err, photoData) {
     if (err) {
       res.send(err);
     } else {
@@ -146,24 +146,27 @@ function addCommentToDB(req, res) {
             commenter: name,
             url: pic,
           });
-          photoData[0].save();
+          photoData[0].save().then((result)=>{
+            publishedUserSchemaModel.find({}, function (err, photoData) {
+              if(err){
+                res.send('something went wrong')
+              }else{
+              console.log('hhhhh',photoData);
+              res.send(photoData)
+              }
+            });
+          });
           break;
         }
         console.log(index);
       }
     }
     
-    const test =  function(){ publishedUserSchemaModel.find({}, function (err, photoData1) {
-      
-      console.log('hhhhh',photoData1);
-      return("photoData1");
-      
-    });
-    console.log('test',test());
-}
-
+    
+    
     // res.send(photoData[0]);
   });
+ 
 }
 
 function deletePublishedphoto(req, res) {
