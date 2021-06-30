@@ -43,15 +43,18 @@ function createUser(email) {
     })
   );
   user[0].save();
-  // user1=newModel({
+  // console.log("ty");
+  // const user1=userModel({
   //   email:'abodeian28@gmail',
   //   photo:[
+  //     {
   //     title: "String",
   // description: "String",
   // url: "String",
-  //   ]
+  //     }
+  //   ],
   // })
-  // user1.save;
+  // user1.save();
 }
 
 // createUser();
@@ -106,6 +109,7 @@ function addUserINDataBase(req, res) {
     if (err) {
       console.log(err);
     } else {
+      console.log(data);
       if (data.length === 0) {
         createUser(email);
         console.log("created");
@@ -138,6 +142,7 @@ function getUserPhoto(req, res) {
     if (err) {
       res.send(err);
     } else {
+      console.log("rrrrrrr",photoData[0].userphotos);
           if(photoData[0].userphotos!==[]){
             console.log(photoData[0].userphotos);
           res.send(photoData[0].userphotos);

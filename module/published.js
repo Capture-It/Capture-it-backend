@@ -183,7 +183,7 @@ function deletePublishedphoto(req, res) {
   // const url = req.params.url;
   console.log(email);
   console.log("from the front", url);
-
+if(url!==undefined){
   publishedUserSchemaModel.find({ email: email }, function (err, photoData) {
     if (err) {
       res.send(err);
@@ -204,6 +204,10 @@ function deletePublishedphoto(req, res) {
       photoData[0].save();
     }
   });
+}
+else{
+  console.log("url is undefined ");
+}
 }
 
 
