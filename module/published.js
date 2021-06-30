@@ -86,12 +86,13 @@ function createPublishedUser(email, title, description, url, nickName) {
 // http://localhost:3010/addPublishedDataToDB?
 
 function addPublishedDataToDB(req, res) {
-  let { title, description, url, email, nickName } = req.body;
+  let { title, description, url, email, nickName,like } = req.body;
 
   publishedUserSchemaModel.find({ email: email }, function (err, photoData) {
     if (err) {
       res.send(err);
     } else {
+
       if (photoData.length !== 0) {
         photoData[0].userPublishedData.push({
           title,
@@ -99,6 +100,7 @@ function addPublishedDataToDB(req, res) {
           url: url,
           name: nickName,
           comment: [],
+          like
         });
         console.log("added");
         photoData[0].save();
@@ -232,6 +234,7 @@ function addlike(req, res) {
         console.log(index);
       }
     }
+    
     
     
     
