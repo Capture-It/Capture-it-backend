@@ -177,7 +177,7 @@ function getPublishedDataDB(req, res) {
   });
  
 }
-
+    
 function deletePublishedphoto(req, res) {
   const { email,url } = req.query;
   // const url = req.params.url;

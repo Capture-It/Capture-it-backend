@@ -90,8 +90,10 @@ function userPhotoToDB(req, res) {
         description: description,
         url: imgurl,
       });
-      photoData[0].save();
-      res.send(photoData[0].photo);
+      photoData[0].save().then((result)=>{
+     
+        res.send(photoData[0].userphotos);
+      });
     }
   });
 }
@@ -194,8 +196,8 @@ function deleteUserPhoto(req, res) {
 function updateuserPhotoHandler(req,res){
   const index=req.params.index;
   const {email,photoName,description,imgurl}=req.body;
-  console.log(req.body)
-  console.log(index,email,photoName,description)
+    console.log(imgurl)
+  console.log(index,email,photoName,description,imgurl)
   userModel.findOne({email:email}, (err,ownerData)=>{
     ownerData.userphotos.splice(index,1,{
       url:imgurl,
