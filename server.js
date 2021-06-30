@@ -31,7 +31,8 @@ const{
   addPublishedDataToDB,
   getPublishedDataDB,
   addCommentToDB,
-  deletePublishedphoto
+  deletePublishedphoto,
+  addlike
 }=require('./module/published');
 
 // createPublishedUser();
@@ -68,7 +69,11 @@ server.get('/getPublishedDataDB',getPublishedDataDB);
 // http://localhost:3010/addCommentToDB
 server.post('/addCommentToDB',addCommentToDB);
     // http://localhost:3010/deletePublishedphoto/
-    server.delete('/deletePublishedphoto/:id',deletePublishedphoto)
+   
+   server.delete('/deletePublishedphoto/:id',deletePublishedphoto)
+
+   // http://localhost:3010/addlike
+server.post('/addlike',addlike);
 
 
 
