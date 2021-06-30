@@ -6,6 +6,7 @@ module.exports = {
   getPublishedDataDB,
   addCommentToDB,
   deletePublishedphoto,
+  addlike
 };
 
 let keyAtlas = process.env.ATLAS;
@@ -19,6 +20,7 @@ const publishedDataSchema = mongoose.Schema({
   description: String,
   url: String,
   comment: [],
+  like:Number
 });
 
 const publishedUserSchema = mongoose.Schema({
@@ -46,32 +48,37 @@ function createPublishedUser(email, title, description, url, nickName) {
           title: title,
           description: description,
           url: url,
+          like:0
         },
       ],
     })
   );
   user[0].save();
 
-  //   const user1=publishedUserSchemaModel({
-  //       email:'abdullah@yahoo.com',
-  //       userPublishedData:[
-  //           {
-  //         name:"String",
-  //         title: "String",
-  //         description: "String",
-  //         url: "String",
-  //         comment:[
-  //             {
-  //                 text:'cool'
-  //             }
+    // const user1=publishedUserSchemaModel({
+    //     email:'abdullah@yahoo.com',
+    //     userPublishedData:[
+    //         {
+    //       name:"String",
+    //       title: "String",
+    //       description: "String",
+    //       url: "String",
+    //       like:  0 ,
+    //       comment:[
+    //           {
+    //               text:'cool',
+    //               commenter:'abdullah',
+    //               url:'pic'
+    //           }
 
-  //         ]
-  //           }
+    //       ],
+          
+    //         }
 
-  //       ]
+    //     ]
 
-  //   })
-  //   user1.save();
+    // })
+    // user1.save();
 }
 
 // createPublishedUser();
@@ -196,3 +203,40 @@ function deletePublishedphoto(req, res) {
     }
   });
 }
+
+
+function addlike(req, res) {
+  let { email, like,  id } = req.body;
+  console.log(req.body);
+
+   publishedUserSchemaModel.find({ email: email }, function (err, photoData) {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(photoData[0].userPublishedData[0].like);
+      for (
+        let index = 0;
+        index < photoData[0].userPublishedData.length;
+        index++
+      ) {
+        if (id === photoData[0].userPublishedData[index]._id.toString()) {
+          photoData[0].userPublishedData[index].like++
+
+          photoData[0].save().then((result)=>{
+            publishedUserSchemaModel.find({},function(err,data){
+              res.send(data)
+            })
+          });
+          break;
+        }
+        console.log(index);
+      }
+    }
+    
+    
+    
+//     // res.send(photoData[0]);
+  });
+ 
+}
+
