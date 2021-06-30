@@ -8,7 +8,8 @@ module.exports = {
   addUserINDataBase,
   userPhotoToDB,
   getUserPhoto,
-  deleteUserPhoto
+  deleteUserPhoto,
+  updateuserPhotoHandler
 };
 let keyAtlas = process.env.ATLAS;
 const mongoose = require("mongoose");
@@ -187,5 +188,25 @@ function deleteUserPhoto(req, res) {
       res.status(201).send(data[0].photo);
     }
   });
+}
+
+
+function updateuserPhotoHandler(req,res){
+  const index=req.params.index;
+  const {email,photoName,description,imgurl}=req.body;
+  console.log(req.body)
+  console.log(index,email,photoName,description)
+  userModel.findOne({email:email}, (err,ownerData)=>{
+    ownerData.userphotos.splice(index,1,{
+      url:imgurl,
+      title:photoName,
+      description:description,
+    })
+    // console.log(ownerData)
+      ownerData.save();
+      res.send(ownerData.userphotos)
+    
+  })
+  
 }
 
