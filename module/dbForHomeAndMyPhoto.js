@@ -43,15 +43,18 @@ function createUser(email) {
     })
   );
   user[0].save();
-  // user1=newModel({
+  // console.log("ty");
+  // const user1=userModel({
   //   email:'abodeian28@gmail',
   //   photo:[
+  //     {
   //     title: "String",
   // description: "String",
   // url: "String",
-  //   ]
+  //     }
+  //   ],
   // })
-  // user1.save;
+  // user1.save();
 }
 
 // createUser();
@@ -90,8 +93,10 @@ function userPhotoToDB(req, res) {
         description: description,
         url: imgurl,
       });
-      photoData[0].save();
-      res.send(photoData[0].photo);
+      photoData[0].save().then((result)=>{
+     
+        res.send(photoData[0].userphotos);
+      });
     }
   });
 }
@@ -104,6 +109,7 @@ function addUserINDataBase(req, res) {
     if (err) {
       console.log(err);
     } else {
+      console.log(data);
       if (data.length === 0) {
         createUser(email);
         console.log("created");
@@ -136,6 +142,7 @@ function getUserPhoto(req, res) {
     if (err) {
       res.send(err);
     } else {
+      console.log("rrrrrrr",photoData[0].userphotos);
           if(photoData[0].userphotos!==[]){
             console.log(photoData[0].userphotos);
           res.send(photoData[0].userphotos);
@@ -194,8 +201,8 @@ function deleteUserPhoto(req, res) {
 function updateuserPhotoHandler(req,res){
   const index=req.params.index;
   const {email,photoName,description,imgurl}=req.body;
-  console.log(req.body)
-  console.log(index,email,photoName,description)
+    console.log(imgurl)
+  console.log(index,email,photoName,description,imgurl)
   userModel.findOne({email:email}, (err,ownerData)=>{
     ownerData.userphotos.splice(index,1,{
       url:imgurl,
